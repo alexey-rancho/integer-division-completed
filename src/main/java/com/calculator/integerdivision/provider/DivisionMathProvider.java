@@ -15,18 +15,22 @@ public class DivisionMathProvider implements Provider<DivisionMathResult> {
     @Override
     public DivisionMathResult provide() {
         DivisionMathResult divisionResult = new DivisionMathResult(dividend, divider);
+
         int[] digits = splitNumber(dividend);
+
+        int digit = 0;
         int remainder = 0;
+
         DivisionStep.Builder stepBuilder = DivisionStep.newBuilder();
         boolean isStepFinished = false;
 
         for (int index = 0; index < digits.length; index++) {
             if (isStepFinished) {
                 stepBuilder = DivisionStep.newBuilder();
+                isStepFinished = false;
             }
-            stepBuilder.setIndex(index);
 
-            int digit = digits[index];
+            digit = digits[index];
 
             if (remainder > 0) {
                 digit = concatNumbers(remainder, digit);
@@ -35,16 +39,24 @@ public class DivisionMathProvider implements Provider<DivisionMathResult> {
                 stepBuilder.setDigit(digit);
             }
 
-            if (digit > divider || digit == 0) {
+            if (digit >= divider || digit == 0) {
+                // sets remainder, subNum, multiplayer
                 divideNumbers(stepBuilder);
                 remainder = stepBuilder.getRemainder();
 
                 divisionResult.addDivisionStep(stepBuilder.build());
                 isStepFinished = true;
+            } else {
+                remainder = 0;
+                stepBuilder.setRemainder(remainder);
             }
         }
 
         return divisionResult;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new DivisionMathProvider(78945, 4).provide());
     }
 
     private int concatNumbers(int a, int b) {
@@ -52,10 +64,10 @@ public class DivisionMathProvider implements Provider<DivisionMathResult> {
     }
 
     private int[] splitNumber(int number) {
-        char[] chars = String.valueOf(number).toCharArray();
-        int[] numbers = new int[chars.length];
+        String[] stringNumbers = String.valueOf(number).split("");
+        int[] numbers = new int[stringNumbers.length];
         for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = (int) chars[i];
+            numbers[i] = Integer.parseInt(stringNumbers[i]);
         }
         return numbers;
     }
@@ -122,10 +134,12 @@ public class DivisionMathProvider implements Provider<DivisionMathResult> {
             subNumber = divider * multiplier;
         }
         multiplier--;
-
         subNumber = divider * multiplier;
+        int remainder = stepBuilder.getDigit() - subNumber;
+
         stepBuilder.setMultiplier(multiplier)
-                .setSubNumber(subNumber);
+                .setSubNumber(subNumber)
+                .setRemainder(remainder);
     }
     
     // upper multiplier? #TODO

@@ -43,9 +43,10 @@ public final class DivisionStep {
     
     public static class Builder {
     	private int index;
-    	private int multiplier;
-    	private int digit;
 
+        private int multiplier;
+
+        private int digit;
         private int subNumber;
 
         private int remainder;
@@ -83,26 +84,37 @@ public final class DivisionStep {
     		this.multiplier = multiplier;
     		return this;
     	}
-    	
+
     	public Builder setSubNumber(int subNumber) {
     		this.subNumber = subNumber;
     		return this;
     	}
-    	
+
     	public Builder setRemainder(int remainder) {
     		this.remainder = remainder;
     		return this;
     	}
-    	
+
     	public Builder setIndex(int index) {
     		this.index = index;
     		return this;
     	}
-    	
+
     	public DivisionStep build() {
     		return new DivisionStep(this);
     	}
-    	
+
+        @Override
+        public String toString() {
+            return "Builder{" +
+                    "index=" + index +
+                    ", multiplier=" + multiplier +
+                    ", digit=" + digit +
+                    ", subNumber=" + subNumber +
+                    ", remainder=" + remainder +
+                    '}';
+        }
+
     }
 
     @Override

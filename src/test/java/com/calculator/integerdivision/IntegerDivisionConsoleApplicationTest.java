@@ -8,7 +8,7 @@ public class IntegerDivisionConsoleApplicationTest {
     void testDivision() {
         IntegerDivisionCalculator integerDivisionCalculator = new IntegerDivisionCalculator(78945, 4);
         //
-        String result = integerDivisionCalculator.getDivisionView();
+        String result = integerDivisionCalculator.getDivisionView().getResult();
         String expected = "_78945|4\n" +
                 " 4    |-----\n" +
                 " -    |19736\n" +

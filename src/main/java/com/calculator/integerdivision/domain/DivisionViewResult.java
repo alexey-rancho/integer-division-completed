@@ -11,4 +11,9 @@ public class DivisionViewResult implements DivisionResult<String> {
     public String getResult() {
         return view;
     }
+
+    @Override
+    public String toString() {
+        return view;
+    }
 }
