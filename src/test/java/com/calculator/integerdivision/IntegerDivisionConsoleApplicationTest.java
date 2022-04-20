@@ -9,13 +9,9 @@ import org.junit.jupiter.api.Test;
 public class IntegerDivisionConsoleApplicationTest {
     @Test
     void testDivision() {
-        IntegerDivisionCalculator integerDivisionCalculator = new IntegerDivisionCalculator(
-                new DivisionMathProvider(),
-                new DivisionViewProvider(),
-                new DivisionValidator()
-        );
-        // 78945, 4
-        String result = integerDivisionCalculator.calculateDivision(78945, 4);
+        IntegerDivisionCalculator integerDivisionCalculator = new IntegerDivisionCalculator(78945, 4);
+        //
+        String result = integerDivisionCalculator.getDivisionView();
         String expected = "_78945|4\n" +
                 " 4    |-----\n" +
                 " -    |19736\n" +

@@ -1,10 +1,13 @@
 package com.calculator.integerdivision.provider;
 
-import com.calculator.integerdivision.domain.DivisionResult;
+import com.calculator.integerdivision.domain.DivisionMathResult;
 import com.calculator.integerdivision.domain.DivisionStep;
+import com.calculator.integerdivision.domain.DivisionViewResult;
+import com.calculator.integerdivision.domain.DivisionResult;
+
 import java.util.List;
 
-public class DivisionViewProvider {
+public class DivisionViewProvider implements Provider<DivisionViewResult> {
 
     private static final String PIPE_DELIMITER = "|";
     private static final String MIDDLE_DELIMITER = "-";
@@ -12,7 +15,14 @@ public class DivisionViewProvider {
     private static final String SPACE_DELIMITER = " ";
     private static final String LINE_BREAK = "\n";
 
-    public String provideView(DivisionResult divisionResult) {
+    private final DivisionMathResult divisionResult;
+
+    public DivisionViewProvider(DivisionMathResult divisionResult) {
+        this.divisionResult = divisionResult;
+    }
+
+    public DivisionViewResult provide() {
+//        DivisionViewResult divisionViewResult = new DivisionViewResult();
 
         List<DivisionStep> steps = divisionResult.getDivisionSteps();
         int quotient = calcQuotient(steps);
@@ -70,8 +80,8 @@ public class DivisionViewProvider {
                 view.append(leftSpaces).append(remainder);
             }
         }
-
-        return view.toString();
+        // return new DivisionViewResult()
+        return new DivisionViewResult(view.toString());
     }
 
     private int calcQuotient(List<DivisionStep> steps) {
@@ -108,7 +118,7 @@ public class DivisionViewProvider {
         return addLeftSpaces.toString();
     }
 
-    private String getLeftSpaces(DivisionResult divisionResult, DivisionStep divisionStep, int stepIndex) {
+    private String getLeftSpaces(DivisionMathResult divisionResult, DivisionStep divisionStep, int stepIndex) {
         StringBuilder leftSpaces = new StringBuilder();
 
         int currentRemainder = divisionStep.getRemainder();

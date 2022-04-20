@@ -37,13 +37,6 @@ public final class DivisionStep {
         return index;
     }
     
-    public static void main(String[] args) {
-		DivisionStep ds = DivisionStep.newBuilder()
-			.setDigit(20)
-			.build();
-		System.out.println(ds);
-	}
-    
     public static Builder newBuilder() {
     	return new Builder();
     }
@@ -92,11 +85,11 @@ public final class DivisionStep {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
         if (o == null || getClass() != o.getClass()) {
             return false;
+        }
+        if (this == o) {
+            return true;
         }
 
         DivisionStep that = (DivisionStep) o;

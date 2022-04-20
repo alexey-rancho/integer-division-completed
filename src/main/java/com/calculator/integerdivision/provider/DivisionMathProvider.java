@@ -1,10 +1,12 @@
 package com.calculator.integerdivision.provider;
 
+import com.calculator.integerdivision.domain.DivisionMathResult;
 import com.calculator.integerdivision.domain.DivisionResult;
 import com.calculator.integerdivision.domain.DivisionStep;
 
-public class DivisionMathProvider {
+public class DivisionMathProvider implements Provider<DivisionMathResult> {
 
+    private int dividend;
     private int divider;
     private char[] digitsFromDividend;
     private int dividendLength;
@@ -12,10 +14,14 @@ public class DivisionMathProvider {
     private int currentIndex = 0;
     private int lastIndex;
 
-    public DivisionResult provideMathDivision(int dividend, int divider) {
-        DivisionResult divisionResult = new DivisionResult(dividend, divider);
-
+    public DivisionMathProvider(int dividend, int divider) {
+        this.dividend = dividend;
         this.divider = divider;
+    }
+
+    public DivisionMathResult provide() {
+        DivisionMathResult divisionResult = new DivisionMathResult(dividend, divider);
+
         digitsFromDividend = String.valueOf(dividend).toCharArray();
         dividendLength = digitsFromDividend.length;
         lastIndex = dividendLength - 1;
