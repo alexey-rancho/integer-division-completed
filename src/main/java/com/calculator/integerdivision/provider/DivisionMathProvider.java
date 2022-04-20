@@ -1,147 +1,109 @@
 package com.calculator.integerdivision.provider;
 
 import com.calculator.integerdivision.domain.DivisionMathResult;
-import com.calculator.integerdivision.domain.DivisionResult;
 import com.calculator.integerdivision.domain.DivisionStep;
 
 public class DivisionMathProvider implements Provider<DivisionMathResult> {
-
-    private int dividend;
-    private int divider;
-    private char[] digitsFromDividend;
-    private int dividendLength;
-    private int remainder;
-    private int currentIndex = 0;
-    private int lastIndex;
+    private final int dividend;
+    private final int divider;
 
     public DivisionMathProvider(int dividend, int divider) {
         this.dividend = dividend;
         this.divider = divider;
     }
 
+    @Override
     public DivisionMathResult provide() {
         DivisionMathResult divisionResult = new DivisionMathResult(dividend, divider);
+        int[] digits = splitNumber(dividend);
+        int remainder = 0;
+        DivisionStep.Builder stepBuilder = DivisionStep.newBuilder();
+        boolean isStepFinished = false;
 
-        digitsFromDividend = String.valueOf(dividend).toCharArray();
-        dividendLength = digitsFromDividend.length;
-        lastIndex = dividendLength - 1;
+        for (int index = 0; index < digits.length; index++) {
+            if (isStepFinished) {
+                stepBuilder = DivisionStep.newBuilder();
+            }
+            stepBuilder.setIndex(index);
 
-        while (currentIndex < dividendLength) {
-            DivisionStep divisionStep = divideNumbers();
-            divisionResult.addDivisionStep(divisionStep);
+            int digit = digits[index];
+
+            if (remainder > 0) {
+                digit = concatNumbers(remainder, digit);
+                stepBuilder.setDigit(digit);
+            } else {
+                stepBuilder.setDigit(digit);
+            }
+
+            if (digit > divider || digit == 0) {
+                divideNumbers(stepBuilder);
+                remainder = stepBuilder.getRemainder();
+
+                divisionResult.addDivisionStep(stepBuilder.build());
+                isStepFinished = true;
+            }
         }
 
         return divisionResult;
     }
 
-    private DivisionStep divideNumbers() {
+    private int concatNumbers(int a, int b) {
+        return Integer.parseInt(String.valueOf(a) + String.valueOf(b));
+    }
 
-        int subtractedNumber = 0;
-        int multiplier = 0;
-        int digit = getDigitFromDividend();
-        
-        if (digit >= divider) {
-            StringBuilder digitBuilder = new StringBuilder();
-
-            if (remainder > 0) {
-                digitBuilder.append(remainder);
-            }
-            digitBuilder.append(digit);
-            digitBuilder = getNumberAfterDecimal(digitBuilder);
-
-            digit = convertToInt(digitBuilder);
-
-            subtractedNumber = calcSubtractedNumber(digit);
-            remainder = calcRemainder(digit, subtractedNumber);
-            multiplier = calcMultiplier(subtractedNumber);
+    private int[] splitNumber(int number) {
+        char[] chars = String.valueOf(number).toCharArray();
+        int[] numbers = new int[chars.length];
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = (int) chars[i];
         }
-        if (digit < divider) {
-            StringBuilder digitBuilder = new StringBuilder();
-
-            if (remainder > 0) {
-                digitBuilder.append(remainder);
-            }
-            digitBuilder.append(digit);
-            digitBuilder = getNumberAfterDecimal(digitBuilder);
-
-            digit = convertToInt(digitBuilder);
-
-            while (digit < divider && currentIndex < lastIndex) {
-                currentIndex++;
-                digitBuilder.append(getNumberFromDividend());
-                digit = convertToInt(digitBuilder);
-            }
-
-            if (digit > divider) {
-                subtractedNumber = calcSubtractedNumber(digit);
-                remainder = calcRemainder(digit, subtractedNumber);
-                multiplier = calcMultiplier(subtractedNumber);
-            }
-            
-            if (digit == divider) { // why else if #TODO
-                digitBuilder.append(getZeroAfterDigit());
-
-                subtractedNumber = calcSubtractedNumber(digit);
-                remainder = calcRemainder(digit, subtractedNumber);
-                multiplier = calcMultiplier(subtractedNumber);
-            }
-        }
-
-        currentIndex++;
-
-        return DivisionStep.newBuilder()
-        		.setDigit(digit)
-        		.setIndex(currentIndex)
-        		.setMultiplier(multiplier)
-        		.setRemainder(remainder)
-        		.setSubtractedNumber(subtractedNumber)
-        		.build();
-    }
-    
-    private StringBuilder getNumberAfterDecimal(StringBuilder digitBuilder) {
-    	if (currentIndex == lastIndex) {
-    		return digitBuilder;
-    	}
-    	
-    	currentIndex++;
-    	int number = getNumberFromDividend();
-    	if (number < divider) {
-    		StringBuilder newDigitBuilder = new StringBuilder(digitBuilder);
-    		newDigitBuilder.append(number);
-    		return newDigitBuilder;
-    	} else {
-    		currentIndex--;
-    		return digitBuilder;	
-    	}
-    }
-    
-    private StringBuilder getZeroAfterDigit() {
-        StringBuilder digitBuilder = new StringBuilder();
-
-        while (currentIndex < lastIndex) {
-            currentIndex++;
-            int guessNumber = getNumberFromDividend();
-            if (guessNumber == 0) {
-                digitBuilder.append(guessNumber);
-            } else {
-                currentIndex--;
-                break;
-            }
-        }
-
-        return digitBuilder;
-    }
-    
-    private int getNumberFromDividend() {
-    	return convertToInt(digitsFromDividend[currentIndex]);
+        return numbers;
     }
 
-    private int getDigitFromDividend() {
-    	StringBuilder sb = new StringBuilder();
-    	sb.append(digitsFromDividend[currentIndex])
-    		.append(getZeroAfterDigit());
-        return convertToInt(sb);
-    }
+//    private StringBuilder getNumberAfterDecimal(StringBuilder digitBuilder) {
+//    	if (currentIndex == lastIndex) {
+//    		return digitBuilder;
+//    	}
+//
+//    	currentIndex++;
+//    	int number = getNumberFromDividend();
+//    	if (number < divider) {
+//    		StringBuilder newDigitBuilder = new StringBuilder(digitBuilder);
+//    		newDigitBuilder.append(number);
+//    		return newDigitBuilder;
+//    	} else {
+//    		currentIndex--;
+//    		return digitBuilder;
+//    	}
+//    }
+//
+//    private StringBuilder getZeroAfterDigit() {
+//        StringBuilder digitBuilder = new StringBuilder();
+//
+//        while (currentIndex < lastIndex) {
+//            currentIndex++;
+//            int guessNumber = getNumberFromDividend();
+//            if (guessNumber == 0) {
+//                digitBuilder.append(guessNumber);
+//            } else {
+//                currentIndex--;
+//                break;
+//            }
+//        }
+//
+//        return digitBuilder;
+//    }
+//
+//    private int getNumberFromDividend() {
+//    	return convertToInt(digitsFromDividend[currentIndex]);
+//    }
+//
+//    private int getDigitFromDividend() {
+//    	StringBuilder sb = new StringBuilder();
+//    	sb.append(digitsFromDividend[currentIndex])
+//    		.append(getZeroAfterDigit());
+//        return convertToInt(sb);
+//    }
 
     private int convertToInt(char digitSymbol) {
         return Integer.parseInt(String.valueOf(digitSymbol));
@@ -151,18 +113,19 @@ public class DivisionMathProvider implements Provider<DivisionMathResult> {
         return Integer.parseInt(String.valueOf(stringBuilder));
     }
 
-    private int calcSubtractedNumber(int digit) {
-        int subtractedNumber = 0;
+    private void divideNumbers(DivisionStep.Builder stepBuilder) {
+        int subNumber = 0;
         int multiplier = 0;
 
-        while (subtractedNumber <= digit) {
+        while (subNumber <= stepBuilder.getDigit()) {
             multiplier++;
-            subtractedNumber = divider * multiplier;
+            subNumber = divider * multiplier;
         }
         multiplier--;
-        subtractedNumber = divider * multiplier;
 
-        return subtractedNumber;
+        subNumber = divider * multiplier;
+        stepBuilder.setMultiplier(multiplier)
+                .setSubNumber(subNumber);
     }
     
     // upper multiplier? #TODO

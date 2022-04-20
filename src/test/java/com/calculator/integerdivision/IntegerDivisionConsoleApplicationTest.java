@@ -1,8 +1,5 @@
 package com.calculator.integerdivision;
 
-import com.calculator.integerdivision.provider.DivisionMathProvider;
-import com.calculator.integerdivision.provider.DivisionViewProvider;
-import com.calculator.integerdivision.validator.DivisionValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

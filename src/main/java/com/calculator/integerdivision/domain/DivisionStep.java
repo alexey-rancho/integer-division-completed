@@ -13,7 +13,7 @@ public final class DivisionStep {
         index = builder.index;
         multiplier = builder.multiplier;
         digit = builder.digit;
-        subtractedNumber = builder.subtractedNumber;
+        subtractedNumber = builder.subNumber;
         remainder = builder.remainder;
     }
 
@@ -45,25 +45,47 @@ public final class DivisionStep {
     	private int index;
     	private int multiplier;
     	private int digit;
-    	private int subtractedNumber;
-    	private int remainder;
-    	
+
+        private int subNumber;
+
+        private int remainder;
+
     	private Builder() {
     		// private constructor
     	}
-    	
+
+        public int getIndex() {
+            return index;
+        }
+
+        public int getMultiplier() {
+            return multiplier;
+        }
+
+        public int getDigit() {
+            return digit;
+        }
+
+        public int getSubNumber() {
+            return subNumber;
+        }
+
+        public int getRemainder() {
+            return remainder;
+        }
+
     	public Builder setDigit(int digit) {
     		this.digit = digit;
     		return this;
     	}
-    	
+
     	public Builder setMultiplier(int multiplier) {
     		this.multiplier = multiplier;
     		return this;
     	}
     	
-    	public Builder setSubtractedNumber(int subtractedNumber) {
-    		this.subtractedNumber = subtractedNumber;
+    	public Builder setSubNumber(int subNumber) {
+    		this.subNumber = subNumber;
     		return this;
     	}
     	
