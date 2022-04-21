@@ -2,29 +2,17 @@ package com.calculator.integerdivision;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class IntegerDivisionConsoleApplicationTest {
-    @Test
-    void testDivision() {
-        IntegerDivisionCalculator integerDivisionCalculator = new IntegerDivisionCalculator(78945, 4);
-        //
+
+    @ParameterizedTest
+    @ArgumentsSource(DivisionViewArgumentsProvider.class)
+    void testDivisionViewWhenDividendBiggerThanDivider(int dividend, int divider, String expected) {
+        IntegerDivisionCalculator integerDivisionCalculator = new IntegerDivisionCalculator(dividend, divider);
         String result = integerDivisionCalculator.getDivisionView().getResult();
-        String expected = "_78945|4\n" +
-                " 4    |-----\n" +
-                " -    |19736\n" +
-                "_38\n" +
-                " 36\n" +
-                " --\n" +
-                " _29\n" +
-                "  28\n" +
-                "  --\n" +
-                "  _14\n" +
-                "   12\n" +
-                "   --\n" +
-                "   _25\n" +
-                "    24\n" +
-                "    --\n" +
-                "    1";
         Assertions.assertEquals(expected, result);
     }
 }

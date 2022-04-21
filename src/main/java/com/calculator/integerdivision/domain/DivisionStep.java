@@ -1,20 +1,26 @@
 package com.calculator.integerdivision.domain;
 
 
+import java.util.Objects;
+//TODO: how to get rid of redundant getters?
 public final class DivisionStep {
 
-    private final int index;
     private final int multiplier;
     private final int digit;
     private final int subtractedNumber;
     private final int remainder;
+    private final int numberOfDigits;
 
     private DivisionStep(Builder builder) {
-        index = builder.index;
         multiplier = builder.multiplier;
         digit = builder.digit;
         subtractedNumber = builder.subNumber;
         remainder = builder.remainder;
+        numberOfDigits = builder.numberOfDigits;
+    }
+
+    public int getNumberOfDigits() {
+        return numberOfDigits;
     }
 
     public int getDigit() {
@@ -32,32 +38,23 @@ public final class DivisionStep {
     public int getRemainder() {
         return remainder;
     }
-
-    public int getIndex() {
-        return index;
-    }
     
     public static Builder newBuilder() {
     	return new Builder();
     }
     
     public static class Builder {
-    	private int index;
 
         private int multiplier;
-
         private int digit;
         private int subNumber;
 
-        private int remainder;
+        private int numberOfDigits;
 
+        private int remainder;
     	private Builder() {
     		// private constructor
     	}
-
-        public int getIndex() {
-            return index;
-        }
 
         public int getMultiplier() {
             return multiplier;
@@ -73,6 +70,15 @@ public final class DivisionStep {
 
         public int getRemainder() {
             return remainder;
+        }
+
+        public int getNumberOfDigits() {
+            return numberOfDigits;
+        }
+
+        public Builder setNumberOfDigits(int numberOfDigits) {
+            this.numberOfDigits = numberOfDigits;
+            return this;
         }
 
     	public Builder setDigit(int digit) {
@@ -95,11 +101,6 @@ public final class DivisionStep {
     		return this;
     	}
 
-    	public Builder setIndex(int index) {
-    		this.index = index;
-    		return this;
-    	}
-
     	public DivisionStep build() {
     		return new DivisionStep(this);
     	}
@@ -107,8 +108,7 @@ public final class DivisionStep {
         @Override
         public String toString() {
             return "Builder{" +
-                    "index=" + index +
-                    ", multiplier=" + multiplier +
+                    "multiplier=" + multiplier +
                     ", digit=" + digit +
                     ", subNumber=" + subNumber +
                     ", remainder=" + remainder +
@@ -128,9 +128,6 @@ public final class DivisionStep {
 
         DivisionStep that = (DivisionStep) o;
 
-        if (index != that.index) {
-            return false;
-        }
         if (multiplier != that.multiplier) {
             return false;
         }
@@ -145,29 +142,22 @@ public final class DivisionStep {
 
     @Override
     public int hashCode() {
-        int result = index;
-        result = 31 * result + multiplier;
-        result = 31 * result + digit;
-        result = 31 * result + subtractedNumber;
-        result = 31 * result + remainder;
-        return result;
+        return Objects.hashCode(this);
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("DivisionStep{");
-        sb.append("index=")
-        	.append(index)
-        	.append(", multiplier=")
-        	.append(multiplier)
-        	.append(", digit=")
-        	.append(digit)
-        	.append(", subtractedNumber=")
-        	.append(subtractedNumber)
-        	.append(", remainder=")
-        	.append(remainder)
-        	.append('}');
-        return sb.toString();
+        return new StringBuilder("DivisionStep{")
+                .append("multiplier=")
+                .append(multiplier)
+                .append(", digit=")
+                .append(digit)
+                .append(", subtractedNumber=")
+                .append(subtractedNumber)
+                .append(", remainder=")
+                .append(remainder)
+                .append('}')
+                .toString();
     }
 
 }

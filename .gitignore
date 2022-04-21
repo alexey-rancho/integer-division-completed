@@ -1,6 +1,7 @@
 *.iml
 build
 gradle
+.gradle
 .settings
 .classpath
 .project

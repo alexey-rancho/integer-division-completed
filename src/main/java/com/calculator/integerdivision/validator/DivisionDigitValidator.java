@@ -1,8 +1,8 @@
 package com.calculator.integerdivision.validator;
 
-public class DivisionValidator implements Validator {
+public class DivisionDigitValidator implements DigitValidator {
 
-    public void validateDigits(int dividend, int divider) throws IllegalArgumentException {
+    public void validate(int dividend, int divider) throws IllegalArgumentException {
         if (dividend < 0) {
             throw new IllegalArgumentException("Dividend can't be negative");
         }

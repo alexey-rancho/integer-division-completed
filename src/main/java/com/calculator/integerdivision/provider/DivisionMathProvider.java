@@ -3,21 +3,26 @@ package com.calculator.integerdivision.provider;
 import com.calculator.integerdivision.domain.DivisionMathResult;
 import com.calculator.integerdivision.domain.DivisionStep;
 
-public class DivisionMathProvider implements Provider<DivisionMathResult> {
-    private final int dividend;
-    private final int divider;
+public class DivisionMathProvider implements MathProvider {
+    private int dividend;
+    private int divider;
 
-    public DivisionMathProvider(int dividend, int divider) {
+    public DivisionMathProvider() {
+    }
+
+    @Override
+    public void setup(int dividend, int divider) {
         this.dividend = dividend;
         this.divider = divider;
     }
 
     @Override
     public DivisionMathResult provide() {
-        DivisionMathResult divisionResult = new DivisionMathResult(dividend, divider);
+        DivisionMathResult mathResult = new DivisionMathResult(dividend, divider);
 
         int[] digits = splitNumber(dividend);
 
+        int lastIndex = digits.length - 1;
         int digit = 0;
         int remainder = 0;
 
@@ -30,37 +35,53 @@ public class DivisionMathProvider implements Provider<DivisionMathResult> {
                 isStepFinished = false;
             }
 
-            digit = digits[index];
-
             if (remainder > 0) {
-                digit = concatNumbers(remainder, digit);
+                digit = concatNumbers(remainder, digits[index]);
                 stepBuilder.setDigit(digit);
-            } else {
+            }
+            if (digit > 0 && remainder == 0) {
+                digit = concatNumbers(digit, digits[index]);
+                stepBuilder.setDigit(digit);
+            }
+            if (digit == 0 && remainder == 0){
+                digit = digits[index];
                 stepBuilder.setDigit(digit);
             }
 
-            if (digit >= divider || digit == 0) {
+            if (digit == divider && index != lastIndex && digits[index + 1] == 0) {
+                continue;
+            } else if (digit >= divider || digit == 0) {
                 // sets remainder, subNum, multiplayer
-                divideNumbers(stepBuilder);
+                divideNumbers(stepBuilder, index, lastIndex);
                 remainder = stepBuilder.getRemainder();
 
-                divisionResult.addDivisionStep(stepBuilder.build());
+                mathResult.addDivisionStep(stepBuilder.build());
                 isStepFinished = true;
+
+                if (remainder == 0) {
+                    digit = 0;
+                }
+            } else if (index == digits.length - 1) {
+                mathResult.addDivisionStep(stepBuilder.build());
             } else {
                 remainder = 0;
                 stepBuilder.setRemainder(remainder);
             }
         }
 
-        return divisionResult;
+        return mathResult;
     }
 
     public static void main(String[] args) {
-        System.out.println(new DivisionMathProvider(78945, 4).provide());
+//        System.out.println(new DivisionMathProvider(78945, 4).provide());
     }
 
     private int concatNumbers(int a, int b) {
         return Integer.parseInt(String.valueOf(a) + String.valueOf(b));
+    }
+
+    private int countDigits(int number) {
+        return String.valueOf(number).split("").length;
     }
 
     private int[] splitNumber(int number) {
@@ -125,7 +146,7 @@ public class DivisionMathProvider implements Provider<DivisionMathResult> {
         return Integer.parseInt(String.valueOf(stringBuilder));
     }
 
-    private void divideNumbers(DivisionStep.Builder stepBuilder) {
+    private void divideNumbers(DivisionStep.Builder stepBuilder, int index, int lastIndex) {
         int subNumber = 0;
         int multiplier = 0;
 
@@ -136,6 +157,10 @@ public class DivisionMathProvider implements Provider<DivisionMathResult> {
         multiplier--;
         subNumber = divider * multiplier;
         int remainder = stepBuilder.getDigit() - subNumber;
+
+        if (countDigits(stepBuilder.getDigit()) > 1 && index != lastIndex) {
+            multiplier = concatNumbers(multiplier, 0);
+        }
 
         stepBuilder.setMultiplier(multiplier)
                 .setSubNumber(subNumber)

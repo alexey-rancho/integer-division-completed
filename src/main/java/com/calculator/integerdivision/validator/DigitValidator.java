@@ -1,9 +1,9 @@
 package com.calculator.integerdivision.validator;
 
-public interface Validator {
+public interface DigitValidator {
     /**
      * @apiNote This method validates dividend and divider before division
      * */
-    void validateDigits(int dividend, int divider);
+    void validate(int dividend, int divider);
 
 }

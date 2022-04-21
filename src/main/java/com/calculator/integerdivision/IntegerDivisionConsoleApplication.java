@@ -1,16 +1,21 @@
 package com.calculator.integerdivision;
 
+import com.calculator.integerdivision.domain.DivisionResult;
 import com.calculator.integerdivision.provider.DivisionMathProvider;
 import com.calculator.integerdivision.provider.DivisionViewProvider;
-import com.calculator.integerdivision.validator.DivisionValidator;
+import com.calculator.integerdivision.validator.DivisionDigitValidator;
 
 public class IntegerDivisionConsoleApplication {
-
     public static void main(String[] args) {
-        IntegerDivisionCalculator integerDivisionCalculator = new IntegerDivisionCalculator(10002, 4);
-        // 78945, 4
-        System.out.println(integerDivisionCalculator.getDivisionView());
-        System.out.println(integerDivisionCalculator.getDivisionMath());
+        IntegerDivisionCalculator calculator = new IntegerDivisionCalculator(
+                new DivisionMathProvider(),
+                new DivisionViewProvider(),
+                new DivisionDigitValidator()
+        );
+        // 78945, 4 | 10002, 4
+        DivisionResult result = calculator.calc(1230, 33);
+        System.out.println(result.getView());
+        System.out.println(result.getMath());
     }
 
 }

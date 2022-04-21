@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DivisionMathResult implements DivisionResult<Integer> {
+public class DivisionMathResult implements Result<Integer> {
     private final int dividend;
     private final int divider;
     private final List<DivisionStep> steps = new ArrayList<>();
@@ -24,7 +24,11 @@ public class DivisionMathResult implements DivisionResult<Integer> {
 
     @Override
     public Integer getResult() {
-        return dividend / divider;
+        StringBuilder result = new StringBuilder();
+        for (DivisionStep step : steps) {
+            result.append(step.getMultiplier());
+        }
+        return Integer.parseInt(result.toString());
     }
 
     public List<DivisionStep> getDivisionSteps() {
@@ -37,7 +41,19 @@ public class DivisionMathResult implements DivisionResult<Integer> {
 
     @Override
     public String toString() {
-        return steps.toString();
+        return new StringBuilder("DivisionMathResult{")
+                .append("dividend=")
+                .append(dividend)
+                .append(", ")
+                .append("divider=")
+                .append(divider)
+                .append(", ")
+                .append("result=")
+                .append(getResult())
+                .append(", ")
+                .append("steps=")
+                .append(steps)
+                .toString();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.calculator.integerdivision.domain;
 
-public class DivisionViewResult implements DivisionResult<String> {
+public class DivisionViewResult implements Result<String> {
     private final String view;
 
     public DivisionViewResult(String view) {

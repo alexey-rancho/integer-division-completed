@@ -3,11 +3,10 @@ package com.calculator.integerdivision.provider;
 import com.calculator.integerdivision.domain.DivisionMathResult;
 import com.calculator.integerdivision.domain.DivisionStep;
 import com.calculator.integerdivision.domain.DivisionViewResult;
-import com.calculator.integerdivision.domain.DivisionResult;
 
 import java.util.List;
 
-public class DivisionViewProvider implements Provider<DivisionViewResult> {
+public class DivisionViewProvider implements ViewProvider {
 
     private static final String PIPE_DELIMITER = "|";
     private static final String MIDDLE_DELIMITER = "-";
@@ -15,16 +14,21 @@ public class DivisionViewProvider implements Provider<DivisionViewResult> {
     private static final String SPACE_DELIMITER = " ";
     private static final String LINE_BREAK = "\n";
 
-    private final DivisionMathResult divisionResult;
+    private DivisionMathResult mathResult;
 
-    public DivisionViewProvider(DivisionMathResult divisionResult) {
-        this.divisionResult = divisionResult;
+    public DivisionViewProvider() {
+
+    }
+
+    @Override
+    public void setup(DivisionMathResult mathResult) {
+        this.mathResult = mathResult;
     }
 
     public DivisionViewResult provide() {
 //        DivisionViewResult divisionViewResult = new DivisionViewResult();
 
-        List<DivisionStep> steps = divisionResult.getDivisionSteps();
+        List<DivisionStep> steps = mathResult.getDivisionSteps();
         int quotient = calcQuotient(steps);
         StringBuilder view = new StringBuilder();
         StringBuilder leftSpaces = new StringBuilder(SPACE_DELIMITER);
@@ -33,13 +37,13 @@ public class DivisionViewProvider implements Provider<DivisionViewResult> {
             int stepIndex = steps.indexOf(divisionStep);
             int lastStepIndex = steps.size() - 1;
 
-            int dividend = divisionResult.getDividend();
-            int divider = divisionResult.getDivider();
+            int dividend = mathResult.getDividend();
+            int divider = mathResult.getDivider();
             int digit = divisionStep.getDigit();
             int subtractedNumber = divisionStep.getSubtractedNumber();
             int remainder = divisionStep.getRemainder();
 
-            leftSpaces.append(getLeftSpaces(divisionResult, divisionStep, stepIndex));
+            leftSpaces.append(getLeftSpaces(mathResult, divisionStep, stepIndex));
 
             if (stepIndex == 0) {
                 String rightSpaces = getRightSpaces(dividend, subtractedNumber);
