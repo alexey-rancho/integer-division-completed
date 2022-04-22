@@ -1,6 +1,7 @@
 package com.calculator.integerdivision.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,19 @@ public class DivisionMathResult implements Result<Integer> {
     public DivisionMathResult(int dividend, int divider) {
         this.dividend = dividend;
         this.divider = divider;
+    }
+
+    /**
+     * @param index step index;
+     * @return DivisionStep object if object by passed index exists
+     * in the step list, otherwise returns null pointer;
+     * */
+    public DivisionStep getStep(int index) {
+        try {
+            return steps.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public int getDividend() {
@@ -26,7 +40,7 @@ public class DivisionMathResult implements Result<Integer> {
     public Integer getResult() {
         StringBuilder result = new StringBuilder();
         for (DivisionStep step : steps) {
-            result.append(step.getMultiplier());
+            result.append(step.getMultiplier()); // ww
         }
         return Integer.parseInt(result.toString());
     }
@@ -35,8 +49,14 @@ public class DivisionMathResult implements Result<Integer> {
         return steps;
     }
 
-    public void addDivisionStep(DivisionStep divisionStep) {
+    public DivisionMathResult addStep(DivisionStep divisionStep) {
         steps.add(divisionStep);
+        return this;
+    }
+
+    public DivisionMathResult addAllSteps(DivisionStep... steps) {
+        Collections.addAll(this.steps, steps);
+        return this;
     }
 
     @Override

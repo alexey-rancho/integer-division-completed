@@ -9,18 +9,12 @@ public final class DivisionStep {
     private final int digit;
     private final int subtractedNumber;
     private final int remainder;
-    private final int numberOfDigits;
 
     private DivisionStep(Builder builder) {
         multiplier = builder.multiplier;
         digit = builder.digit;
         subtractedNumber = builder.subNumber;
         remainder = builder.remainder;
-        numberOfDigits = builder.numberOfDigits;
-    }
-
-    public int getNumberOfDigits() {
-        return numberOfDigits;
     }
 
     public int getDigit() {
@@ -49,8 +43,6 @@ public final class DivisionStep {
         private int digit;
         private int subNumber;
 
-        private int numberOfDigits;
-
         private int remainder;
     	private Builder() {
     		// private constructor
@@ -72,14 +64,6 @@ public final class DivisionStep {
             return remainder;
         }
 
-        public int getNumberOfDigits() {
-            return numberOfDigits;
-        }
-
-        public Builder setNumberOfDigits(int numberOfDigits) {
-            this.numberOfDigits = numberOfDigits;
-            return this;
-        }
 
     	public Builder setDigit(int digit) {
     		this.digit = digit;

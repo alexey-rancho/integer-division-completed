@@ -12,10 +12,9 @@ public class IntegerDivisionConsoleApplication {
                 new DivisionViewProvider(),
                 new DivisionDigitValidator()
         );
-        // 78945, 4 | 10002, 4
-        DivisionResult result = calculator.calc(1230, 33);
-        System.out.println(result.getView());
-        System.out.println(result.getMath());
+        DivisionResult result1 = calculator.calc(1111111, 111);
+        System.out.println(result1.getView());
+        System.out.println(result1.getMath());
     }
 
 }
