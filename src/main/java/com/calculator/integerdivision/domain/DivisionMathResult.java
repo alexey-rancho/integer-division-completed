@@ -42,7 +42,11 @@ public class DivisionMathResult implements Result<Integer> {
         for (DivisionStep step : steps) {
             result.append(step.getMultiplier()); // ww
         }
-        return Integer.parseInt(result.toString());
+        try {
+            return Integer.parseInt(result.toString());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     public List<DivisionStep> getDivisionSteps() {
@@ -91,6 +95,9 @@ public class DivisionMathResult implements Result<Integer> {
             return false;
         }
         if (divider != that.divider) {
+            return false;
+        }
+        if (!getResult().equals(that.getResult())) {
             return false;
         }
         return steps.equals(that.steps);
