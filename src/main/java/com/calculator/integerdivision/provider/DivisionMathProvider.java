@@ -1,7 +1,7 @@
 package com.calculator.integerdivision.provider;
 
 import com.calculator.integerdivision.domain.DivisionMathResult;
-import com.calculator.integerdivision.domain.DivisionStep;
+import com.calculator.integerdivision.domain.DivisionMathStep;
 
 
 public class DivisionMathProvider implements MathProvider {
@@ -28,11 +28,11 @@ public class DivisionMathProvider implements MathProvider {
         int remainder = 0;
         boolean isStepFinished = false;
 
-        DivisionStep.Builder stepBuilder = DivisionStep.newBuilder();
+        DivisionMathStep.Builder stepBuilder = DivisionMathStep.newBuilder();
 
         for (int index = 0; index < digits.length; index++) {
             if (isStepFinished) {
-                stepBuilder = DivisionStep.newBuilder();
+                stepBuilder = DivisionMathStep.newBuilder();
                 isStepFinished = false;
             }
 
@@ -54,7 +54,7 @@ public class DivisionMathProvider implements MathProvider {
                 continue;
             }
             if (digit >= divider || digit == 0) {
-                DivisionStep step = divide(stepBuilder, digit, divider);
+                DivisionMathStep step = divide(stepBuilder, digit, divider);
                 mathResult.addStep(step);
                 isStepFinished = true;
 
@@ -68,7 +68,7 @@ public class DivisionMathProvider implements MathProvider {
         return mathResult;
     }
 
-    private DivisionStep divide(DivisionStep.Builder builder, int dividend, int divider) {
+    private DivisionMathStep divide(DivisionMathStep.Builder builder, int dividend, int divider) {
         int subNumber = dividend - (dividend % divider);
         int multiplier = subNumber / divider;
         int remainder = dividend - subNumber;
@@ -95,7 +95,7 @@ public class DivisionMathProvider implements MathProvider {
         return digits.length > 0
                 && index >= 0
                 && index < digits.length - 1
-                && digits[index + 1] <= digits[index];
+                && digits[index + 1] <= divider;
     }
 
     private int concatNumbers(int a, int b) {

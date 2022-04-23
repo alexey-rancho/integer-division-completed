@@ -1,8 +1,9 @@
 package com.calculator.integerdivision.provider;
 
 import com.calculator.integerdivision.domain.DivisionMathResult;
-import com.calculator.integerdivision.domain.DivisionStep;
+import com.calculator.integerdivision.domain.DivisionMathStep;
 import com.calculator.integerdivision.domain.DivisionViewResult;
+import com.calculator.integerdivision.domain.DivisionViewStep;
 
 import java.util.List;
 
@@ -26,12 +27,7 @@ public class DivisionViewProvider implements ViewProvider {
     }
 
     public DivisionViewResult provide() {
-//        DivisionViewResult divisionViewResult = new DivisionViewResult();
-
-        List<DivisionStep> steps = mathResult.getDivisionSteps();
-        int quotient = calcQuotient(steps);
-        StringBuilder view = new StringBuilder();
-        StringBuilder leftSpaces = new StringBuilder(SPACE_DELIMITER);
+        DivisionViewResult viewResult = new DivisionViewResult();
 
         for (DivisionStep divisionStep : steps) {
             int stepIndex = steps.indexOf(divisionStep);
@@ -84,8 +80,8 @@ public class DivisionViewProvider implements ViewProvider {
                 view.append(leftSpaces).append(remainder);
             }
         }
-        // return new DivisionViewResult()
-        return new DivisionViewResult(view.toString());
+
+        return viewResult;
     }
 
     private int calcQuotient(List<DivisionStep> steps) {
@@ -122,12 +118,12 @@ public class DivisionViewProvider implements ViewProvider {
         return addLeftSpaces.toString();
     }
 
-    private String getLeftSpaces(DivisionMathResult divisionResult, DivisionStep divisionStep, int stepIndex) {
+    private String getLeftSpaces(DivisionMathResult mathResult, DivisionMathStep step, int stepIndex) {
         StringBuilder leftSpaces = new StringBuilder();
 
-        int currentRemainder = divisionStep.getRemainder();
-        int subtractedNumberLength = calcNumberLength(divisionStep.getSubtractedNumber());
-        int digitLength = calcNumberLength(divisionStep.getDigit());
+        int currentRemainder = step.getRemainder();
+        int subtractedNumberLength = calcNumberLength(step.getSubNumber());
+        int digitLength = calcNumberLength(step.getDigit());
 
         if (stepIndex == 0 && currentRemainder > 0) {
             int difference = digitLength - subtractedNumberLength;
@@ -137,7 +133,7 @@ public class DivisionViewProvider implements ViewProvider {
         }
 
         if (stepIndex > 0) {
-            DivisionStep prevStep = divisionResult.getDivisionSteps().get(stepIndex - 1);
+            DivisionMathStep prevStep = mathResult.getSteps().get(stepIndex - 1);
             int prevDigit = prevStep.getDigit();
             int prevRemainder = prevStep.getRemainder();
 

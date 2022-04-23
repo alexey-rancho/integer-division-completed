@@ -3,17 +3,17 @@ package com.calculator.integerdivision.domain;
 
 import java.util.Objects;
 //TODO: how to get rid of redundant getters?
-public final class DivisionStep {
+public final class DivisionMathStep {
 
     private final int multiplier;
     private final int digit;
-    private final int subtractedNumber;
+    private final int subNumber;
     private final int remainder;
 
-    private DivisionStep(Builder builder) {
+    private DivisionMathStep(Builder builder) {
         multiplier = builder.multiplier;
         digit = builder.digit;
-        subtractedNumber = builder.subNumber;
+        subNumber = builder.subNumber;
         remainder = builder.remainder;
     }
 
@@ -25,8 +25,8 @@ public final class DivisionStep {
         return multiplier;
     }
 
-    public int getSubtractedNumber() {
-        return subtractedNumber;
+    public int getSubNumber() {
+        return subNumber;
     }
 
     public int getRemainder() {
@@ -42,7 +42,6 @@ public final class DivisionStep {
         private int multiplier;
         private int digit;
         private int subNumber;
-
         private int remainder;
     	private Builder() {
     		// private constructor
@@ -85,8 +84,8 @@ public final class DivisionStep {
     		return this;
     	}
 
-    	public DivisionStep build() {
-    		return new DivisionStep(this);
+    	public DivisionMathStep build() {
+    		return new DivisionMathStep(this);
     	}
 
         @Override
@@ -110,7 +109,7 @@ public final class DivisionStep {
             return true;
         }
 
-        DivisionStep that = (DivisionStep) o;
+        DivisionMathStep that = (DivisionMathStep) o;
 
         if (multiplier != that.multiplier) {
             return false;
@@ -118,7 +117,7 @@ public final class DivisionStep {
         if (digit != that.digit) {
             return false;
         }
-        if (subtractedNumber != that.subtractedNumber) {
+        if (subNumber != that.subNumber) {
             return false;
         }
         return remainder == that.remainder;
@@ -136,8 +135,8 @@ public final class DivisionStep {
                 .append(multiplier)
                 .append(", digit=")
                 .append(digit)
-                .append(", subtractedNumber=")
-                .append(subtractedNumber)
+                .append(", subNumber=")
+                .append(subNumber)
                 .append(", remainder=")
                 .append(remainder)
                 .append('}')

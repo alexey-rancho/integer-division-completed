@@ -1,7 +1,7 @@
 package com.calculator.integerdivision;
 
 import com.calculator.integerdivision.domain.DivisionMathResult;
-import com.calculator.integerdivision.domain.DivisionStep;
+import com.calculator.integerdivision.domain.DivisionMathStep;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -63,8 +63,13 @@ public class DivisionMathArgumentsProvider implements ArgumentsProvider {
                     buildStep(71034, 7, 70000, 1034)
             );
 
+    DivisionMathResult expected10 = new DivisionMathResult(7702, 7)
+            .addAllSteps(
+                    buildStep(7702, 1100, 7700, 2)
+            );
+
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
                 Arguments.of(expected1),
                 Arguments.of(expected2),
@@ -74,12 +79,13 @@ public class DivisionMathArgumentsProvider implements ArgumentsProvider {
                 Arguments.of(expected6),
                 Arguments.of(expected7),
                 Arguments.of(expected8),
-                Arguments.of(expected9)
+                Arguments.of(expected9),
+                Arguments.of(expected10)
         );
     }
 
-    private DivisionStep buildStep(int digit, int multiplier, int subNumber, int remainder) {
-        return DivisionStep.newBuilder()
+    private DivisionMathStep buildStep(int digit, int multiplier, int subNumber, int remainder) {
+        return DivisionMathStep.newBuilder()
                 .setDigit(digit)
                 .setMultiplier(multiplier)
                 .setSubNumber(subNumber)

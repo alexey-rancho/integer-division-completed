@@ -1,19 +1,43 @@
 package com.calculator.integerdivision.domain;
 
-public class DivisionViewResult implements Result<String> {
-    private final String view;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    public DivisionViewResult(String view) {
-        this.view = view;
+public class DivisionViewResult implements DivisionResult<DivisionViewStep> {
+
+    private final List<DivisionViewStep> steps = new ArrayList<>();
+
+    @Override
+    public DivisionViewStep getStep(int index) {
+        try {
+            return steps.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     @Override
-    public String getResult() {
-        return view;
+    public DivisionViewResult addStep(DivisionViewStep step) {
+        steps.add(step);
+        return this;
+    }
+
+    @Override
+    public List<DivisionViewStep> getSteps() {
+        return steps;
+    }
+
+    @Override
+    public DivisionViewResult addAllSteps(DivisionViewStep... steps) {
+        Collections.addAll(this.steps, steps);
+        return this;
     }
 
     @Override
     public String toString() {
-        return view;
+        StringBuilder builder = new StringBuilder();
+        steps.forEach(step -> builder.append(step.getView()));
+        return builder.toString();
     }
 }

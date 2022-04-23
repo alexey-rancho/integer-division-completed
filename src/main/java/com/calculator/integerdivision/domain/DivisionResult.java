@@ -1,19 +1,16 @@
 package com.calculator.integerdivision.domain;
 
-public class DivisionResult {
-    private final DivisionMathResult mathResult;
-    private final DivisionViewResult viewResult;
+import java.util.ArrayList;
+import java.util.List;
 
-    public DivisionResult(DivisionMathResult mathResult, DivisionViewResult viewResult) {
-        this.mathResult = mathResult;
-        this.viewResult = viewResult;
-    }
+public interface DivisionResult<StepType> {
 
-    public DivisionMathResult getMath() {
-        return mathResult;
-    }
+    StepType getStep(int index);
 
-    public DivisionViewResult getView() {
-        return viewResult;
-    }
+    List<StepType> getSteps();
+
+    DivisionResult<StepType> addStep(StepType step);
+
+    DivisionResult<StepType> addAllSteps(StepType... steps);
+
 }

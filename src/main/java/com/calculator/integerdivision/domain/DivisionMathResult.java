@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class DivisionMathResult implements Result<Integer> {
+public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
     private final int dividend;
     private final int divider;
-    private final List<DivisionStep> steps = new ArrayList<>();
+    private final List<DivisionMathStep> steps = new ArrayList<>();
 
     public DivisionMathResult(int dividend, int divider) {
         this.dividend = dividend;
@@ -20,7 +20,8 @@ public class DivisionMathResult implements Result<Integer> {
      * @return DivisionStep object if object by passed index exists
      * in the step list, otherwise returns null pointer;
      * */
-    public DivisionStep getStep(int index) {
+    @Override
+    public DivisionMathStep getStep(int index) {
         try {
             return steps.get(index);
         } catch (IndexOutOfBoundsException e) {
@@ -36,10 +37,9 @@ public class DivisionMathResult implements Result<Integer> {
         return divider;
     }
 
-    @Override
     public Integer getResult() {
         StringBuilder result = new StringBuilder();
-        for (DivisionStep step : steps) {
+        for (DivisionMathStep step : steps) {
             result.append(step.getMultiplier()); // ww
         }
         try {
@@ -49,16 +49,19 @@ public class DivisionMathResult implements Result<Integer> {
         }
     }
 
-    public List<DivisionStep> getDivisionSteps() {
-        return steps;
+    @Override
+    public List<DivisionMathStep> getSteps() {
+        return List.copyOf(steps);
     }
 
-    public DivisionMathResult addStep(DivisionStep divisionStep) {
-        steps.add(divisionStep);
+    @Override
+    public DivisionMathResult addStep(DivisionMathStep step) {
+        steps.add(step);
         return this;
     }
 
-    public DivisionMathResult addAllSteps(DivisionStep... steps) {
+    @Override
+    public DivisionMathResult addAllSteps(DivisionMathStep... steps) {
         Collections.addAll(this.steps, steps);
         return this;
     }
