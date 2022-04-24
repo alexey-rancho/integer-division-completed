@@ -13,7 +13,7 @@ public class DivisionViewProviderTest {
     @ParameterizedTest
     @ArgumentsSource(DivisionViewArgumentsProvider.class)
     void testProvideWhenDividendBiggerThanDivider(int dividend, int divider, DivisionViewResult expected) {
-        DivisionMathResult mathResult = new DivisionMathResult(dividend, divider);
+        DivisionMathResult mathResult = new DivisionMathProvider().provide(dividend, divider);
         DivisionViewResult actual = new DivisionViewProvider().provide(mathResult);
         Assertions.assertEquals(expected, actual);
     }
