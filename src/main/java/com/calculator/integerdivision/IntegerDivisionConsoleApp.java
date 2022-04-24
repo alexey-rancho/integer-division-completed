@@ -5,16 +5,18 @@ import com.calculator.integerdivision.provider.DivisionMathProvider;
 import com.calculator.integerdivision.provider.DivisionViewProvider;
 import com.calculator.integerdivision.validator.DivisionDigitValidator;
 
-public class IntegerDivisionConsoleApplication {
+public class IntegerDivisionConsoleApp {
+
     public static void main(String[] args) {
         IntegerDivisionCalculator calculator = new IntegerDivisionCalculator(
                 new DivisionMathProvider(),
                 new DivisionViewProvider(),
                 new DivisionDigitValidator()
         );
-        DivisionResult result1 = calculator.calc(1111111, 111);
-        System.out.println(result1.getView());
-        System.out.println(result1.getMath());
+        // 1000 / 2
+        DivisionFinalResult result = calculator.calc(2040, 20);
+        System.out.println(result.getView());
+        System.out.println(result.getMath());
     }
 
 }

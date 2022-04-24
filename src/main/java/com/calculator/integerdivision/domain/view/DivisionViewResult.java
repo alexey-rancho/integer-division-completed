@@ -1,4 +1,6 @@
-package com.calculator.integerdivision.domain;
+package com.calculator.integerdivision.domain.view;
+
+import com.calculator.integerdivision.domain.DivisionResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,14 +26,19 @@ public class DivisionViewResult implements DivisionResult<DivisionViewStep> {
     }
 
     @Override
-    public List<DivisionViewStep> getSteps() {
-        return steps;
-    }
-
-    @Override
     public DivisionViewResult addAllSteps(DivisionViewStep... steps) {
         Collections.addAll(this.steps, steps);
         return this;
+    }
+
+    @Override
+    public List<DivisionViewStep> getSteps() {
+        return List.copyOf(steps);
+    }
+
+    @Override
+    public int size() {
+        return steps.size();
     }
 
     @Override
@@ -39,5 +46,19 @@ public class DivisionViewResult implements DivisionResult<DivisionViewStep> {
         StringBuilder builder = new StringBuilder();
         steps.forEach(step -> builder.append(step.getView()));
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        DivisionViewResult that = (DivisionViewResult) o;
+
+        return steps.equals(that.getSteps());
     }
 }

@@ -1,6 +1,5 @@
 package com.calculator.integerdivision.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface DivisionResult<StepType> {
@@ -12,5 +11,7 @@ public interface DivisionResult<StepType> {
     DivisionResult<StepType> addStep(StepType step);
 
     DivisionResult<StepType> addAllSteps(StepType... steps);
+
+    int size();
 
 }

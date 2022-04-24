@@ -1,4 +1,6 @@
-package com.calculator.integerdivision.domain;
+package com.calculator.integerdivision.domain.math;
+
+import com.calculator.integerdivision.domain.DivisionResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +21,7 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
      * @param index step index;
      * @return DivisionStep object if object by passed index exists
      * in the step list, otherwise returns null pointer;
-     * */
+     */
     @Override
     public DivisionMathStep getStep(int index) {
         try {
@@ -37,15 +39,15 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
         return divider;
     }
 
-    public Integer getResult() {
+    public int getResult() {
         StringBuilder result = new StringBuilder();
         for (DivisionMathStep step : steps) {
-            result.append(step.getMultiplier()); // ww
+            result.append(step.getMultiplier());
         }
         try {
             return Integer.parseInt(result.toString());
         } catch (NumberFormatException e) {
-            return null;
+            return 0;
         }
     }
 
@@ -64,6 +66,11 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
     public DivisionMathResult addAllSteps(DivisionMathStep... steps) {
         Collections.addAll(this.steps, steps);
         return this;
+    }
+
+    @Override
+    public int size() {
+        return steps.size();
     }
 
     @Override
@@ -100,7 +107,7 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
         if (divider != that.divider) {
             return false;
         }
-        if (!getResult().equals(that.getResult())) {
+        if (!(getResult() == that.getResult())) {
             return false;
         }
         return steps.equals(that.steps);

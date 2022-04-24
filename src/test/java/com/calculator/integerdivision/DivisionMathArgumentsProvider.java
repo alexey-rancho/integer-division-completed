@@ -1,7 +1,7 @@
 package com.calculator.integerdivision;
 
-import com.calculator.integerdivision.domain.DivisionMathResult;
-import com.calculator.integerdivision.domain.DivisionMathStep;
+import com.calculator.integerdivision.domain.math.DivisionMathResult;
+import com.calculator.integerdivision.domain.math.DivisionMathStep;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;

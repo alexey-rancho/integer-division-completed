@@ -1,26 +1,15 @@
 package com.calculator.integerdivision.provider;
 
-import com.calculator.integerdivision.domain.DivisionMathResult;
-import com.calculator.integerdivision.domain.DivisionMathStep;
+import com.calculator.integerdivision.domain.math.DivisionMathResult;
+import com.calculator.integerdivision.domain.math.DivisionMathStep;
 
 
-public class DivisionMathProvider implements MathProvider {
-    private int dividend;
-    private int divider;
-
-    @Override
-    public DivisionMathProvider setup(int dividend, int divider) {
-        this.dividend = dividend;
-        this.divider = divider;
-        return this;
+public class DivisionMathProvider implements Provider {
+    public DivisionMathResult provide(int dividend, int divider) {
+        return createResult(dividend, divider);
     }
 
-    @Override
-    public DivisionMathResult provide() {
-        return calcResult();
-    }
-
-    private DivisionMathResult calcResult() {
+    private DivisionMathResult createResult(int dividend, int divider) {
         DivisionMathResult mathResult = new DivisionMathResult(dividend, divider);
 
         int[] digits = splitNumber(dividend);
@@ -49,7 +38,7 @@ public class DivisionMathProvider implements MathProvider {
                 stepBuilder.setDigit(digit);
             }
 
-            boolean condition = isNextDigitNull(index, digits) || isNextDigitEqualOrLess(index, digits);
+            boolean condition = isNextDigitNull(index, digits) || isNextDigitEqualOrLess(index, digits, divider);
             if (isDividerPartOfDigit(divider, digit) && condition) {
                 continue;
             }
@@ -91,7 +80,7 @@ public class DivisionMathProvider implements MathProvider {
                 && digits[index + 1] == 0;
     }
 
-    private boolean isNextDigitEqualOrLess(int index, int[] digits) {
+    private boolean isNextDigitEqualOrLess(int index, int[] digits, int divider) {
         return digits.length > 0
                 && index >= 0
                 && index < digits.length - 1

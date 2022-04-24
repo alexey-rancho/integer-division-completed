@@ -1,8 +1,7 @@
-package com.calculator.integerdivision.domain;
-
+package com.calculator.integerdivision.domain.math;
 
 import java.util.Objects;
-//TODO: how to get rid of redundant getters?
+
 public final class DivisionMathStep {
 
     private final int multiplier;
@@ -32,61 +31,45 @@ public final class DivisionMathStep {
     public int getRemainder() {
         return remainder;
     }
-    
+
     public static Builder newBuilder() {
-    	return new Builder();
+        return new Builder();
     }
-    
+
     public static class Builder {
 
         private int multiplier;
         private int digit;
         private int subNumber;
         private int remainder;
-    	private Builder() {
-    		// private constructor
-    	}
 
-        public int getMultiplier() {
-            return multiplier;
+        private Builder() {
+
         }
 
-        public int getDigit() {
-            return digit;
+        public Builder setDigit(int digit) {
+            this.digit = digit;
+            return this;
         }
 
-        public int getSubNumber() {
-            return subNumber;
+        public Builder setMultiplier(int multiplier) {
+            this.multiplier = multiplier;
+            return this;
         }
 
-        public int getRemainder() {
-            return remainder;
+        public Builder setSubNumber(int subNumber) {
+            this.subNumber = subNumber;
+            return this;
         }
 
+        public Builder setRemainder(int remainder) {
+            this.remainder = remainder;
+            return this;
+        }
 
-    	public Builder setDigit(int digit) {
-    		this.digit = digit;
-    		return this;
-    	}
-
-    	public Builder setMultiplier(int multiplier) {
-    		this.multiplier = multiplier;
-    		return this;
-    	}
-
-    	public Builder setSubNumber(int subNumber) {
-    		this.subNumber = subNumber;
-    		return this;
-    	}
-
-    	public Builder setRemainder(int remainder) {
-    		this.remainder = remainder;
-    		return this;
-    	}
-
-    	public DivisionMathStep build() {
-    		return new DivisionMathStep(this);
-    	}
+        public DivisionMathStep build() {
+            return new DivisionMathStep(this);
+        }
 
         @Override
         public String toString() {
