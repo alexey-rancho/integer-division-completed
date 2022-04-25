@@ -10,6 +10,11 @@ public class DivisionViewResult implements DivisionResult<DivisionViewStep> {
 
     private final List<DivisionViewStep> steps = new ArrayList<>();
 
+    /**
+     * @param index step index;
+     * @return DivisionViewStep object if it exists in the step list
+     * by passed index, otherwise returns null
+     */
     @Override
     public DivisionViewStep getStep(int index) {
         try {
@@ -59,6 +64,11 @@ public class DivisionViewResult implements DivisionResult<DivisionViewStep> {
 
         DivisionViewResult that = (DivisionViewResult) o;
 
+        if (size() != that.size()) {
+            return false;
+        }
+
         return steps.equals(that.getSteps());
     }
+
 }

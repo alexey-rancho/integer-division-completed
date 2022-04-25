@@ -1,6 +1,6 @@
 package com.calculator.integerdivision.validator;
 
-public interface DigitValidator {
+public interface NumberValidator {
 
     void validate(int dividend, int divider);
 

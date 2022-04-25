@@ -1,6 +1,6 @@
 package com.calculator.integerdivision.validator;
 
-public class DivisionDigitValidator implements DigitValidator {
+public class DivisionNumberValidator implements NumberValidator {
 
     /**
      * Validates dividend and divider before division
@@ -11,8 +11,8 @@ public class DivisionDigitValidator implements DigitValidator {
      *                                  or divider < 0, or divider == 0
      */
     public void validate(int dividend, int divider) throws IllegalArgumentException {
-        if (dividend < divider) {
-            throw new IllegalArgumentException("Divider cannot be > dividend");
+        if (divider == 0) {
+            throw new IllegalArgumentException("Division by zero cannot be done");
         }
         if (dividend < 0) {
             throw new IllegalArgumentException("Dividend cannot be negative");
@@ -20,8 +20,8 @@ public class DivisionDigitValidator implements DigitValidator {
         if (divider < 0) {
             throw new IllegalArgumentException("Divider cannot be negative");
         }
-        if (divider == 0) {
-            throw new IllegalArgumentException("Division by zero cannot be done");
+        if (dividend < divider) {
+            throw new IllegalArgumentException("Divider cannot be > dividend");
         }
     }
 

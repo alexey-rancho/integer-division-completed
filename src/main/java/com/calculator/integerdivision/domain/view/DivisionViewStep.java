@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class DivisionViewStep {
+
     private final List<String> viewLines;
 
     private DivisionViewStep(Builder builder) {
@@ -62,4 +63,5 @@ public class DivisionViewStep {
 
         return getViewLines().equals(that.getViewLines());
     }
+
 }

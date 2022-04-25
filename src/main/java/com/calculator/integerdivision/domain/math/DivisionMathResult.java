@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
+
     private final int dividend;
     private final int divider;
     private final List<DivisionMathStep> steps = new ArrayList<>();
@@ -19,8 +20,8 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
 
     /**
      * @param index step index;
-     * @return DivisionStep object if object by passed index exists
-     * in the step list, otherwise returns null pointer;
+     * @return DivisionMathStep object if it exists in the step list
+     * by passed index, otherwise returns null
      */
     @Override
     public DivisionMathStep getStep(int index) {
@@ -87,6 +88,7 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
                 .append(", ")
                 .append("steps=")
                 .append(steps)
+                .append("}")
                 .toString();
     }
 
@@ -107,7 +109,10 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
         if (divider != that.divider) {
             return false;
         }
-        if (!(getResult() == that.getResult())) {
+        if (getResult() != that.getResult()) {
+            return false;
+        }
+        if (size() != that.size()) {
             return false;
         }
         return steps.equals(that.steps);
@@ -117,4 +122,5 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
     public int hashCode() {
         return Objects.hashCode(steps);
     }
+
 }

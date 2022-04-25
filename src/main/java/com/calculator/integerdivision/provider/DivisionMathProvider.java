@@ -5,6 +5,11 @@ import com.calculator.integerdivision.domain.math.DivisionMathStep;
 
 
 public class DivisionMathProvider implements Provider {
+
+    public DivisionMathProvider() {
+
+    }
+
     public DivisionMathResult provide(int dividend, int divider) {
         return createResult(dividend, divider);
     }

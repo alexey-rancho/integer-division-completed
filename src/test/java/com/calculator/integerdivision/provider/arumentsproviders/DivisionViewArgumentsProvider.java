@@ -1,4 +1,4 @@
-package com.calculator.integerdivision;
+package com.calculator.integerdivision.provider.arumentsproviders;
 
 import com.calculator.integerdivision.domain.view.DivisionViewResult;
 import com.calculator.integerdivision.domain.view.DivisionViewStep;
