@@ -44,8 +44,9 @@ public class DivisionMathProvider implements Provider {
                 stepBuilder.setDigit(digit);
             }
 
-            boolean condition = isNextDigitNull(index, digits) || isNextDigitEqualOrLess(index, digits, divider);
-            if (isDividerPartOfDigit(divider, digit) && condition) {
+            boolean condition1 = isDigitDividedWithNoRemainder(digit, divider) || isDividerPartOfDigit(divider, digit);
+            boolean condition2 = isNextDigitNull(index, digits) || isNextDigitEqualOrLess(index, digits, divider);
+            if (condition1 && condition2) {
                 continue;
             }
             if (digit >= divider || digit == 0) {
@@ -88,6 +89,10 @@ public class DivisionMathProvider implements Provider {
                 .setSubNumber(divisionInfo.subNumber)
                 .setRemainder(divisionInfo.remainder);
         return stepBuilder.build();
+    }
+
+    private boolean isDigitDividedWithNoRemainder(int digit, int divider) {
+        return digit % divider == 0;
     }
 
     private boolean isDividerPartOfDigit(int divider, int digit) {
