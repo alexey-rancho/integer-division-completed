@@ -40,13 +40,21 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
         return divider;
     }
 
+    /**
+     * Returns result of integer division that consists of
+     * the multipliers of each DivisionMathStep object. All the multipliers
+     * are concat to the string which is converts to integer.
+     *
+     * @return integer > 0 when multiplier string are converted to integer correctly.
+     * Returns integer == 0 when multiplier string represents too many numbers (> 10)
+     * to be converted to integer.
+     */
     public int getResult() {
-        StringBuilder result = new StringBuilder();
-        for (DivisionMathStep step : steps) {
-            result.append(step.getMultiplier());
-        }
+        String concatMultipliers = steps.stream()
+                .map(step -> String.valueOf(step.getMultiplier()))
+                .reduce("", (partial, next) -> partial + next);
         try {
-            return Integer.parseInt(result.toString());
+            return Integer.parseInt(concatMultipliers);
         } catch (NumberFormatException e) {
             return 0;
         }

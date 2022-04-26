@@ -71,16 +71,6 @@ public final class DivisionMathStep {
             return new DivisionMathStep(this);
         }
 
-        @Override
-        public String toString() {
-            return "Builder{" +
-                    "multiplier=" + multiplier +
-                    ", digit=" + digit +
-                    ", subNumber=" + subNumber +
-                    ", remainder=" + remainder +
-                    '}';
-        }
-
     }
 
     @Override

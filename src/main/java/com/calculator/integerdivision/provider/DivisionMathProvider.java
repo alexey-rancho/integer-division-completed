@@ -3,6 +3,7 @@ package com.calculator.integerdivision.provider;
 import com.calculator.integerdivision.domain.math.DivisionMathResult;
 import com.calculator.integerdivision.domain.math.DivisionMathStep;
 
+import java.util.Arrays;
 
 public class DivisionMathProvider implements Provider {
 
@@ -93,16 +94,12 @@ public class DivisionMathProvider implements Provider {
     }
 
     private int concatNumbers(int a, int b) {
-        return Integer.parseInt(String.valueOf(a) + String.valueOf(b));
+        return Integer.parseInt("%d%d".formatted(a, b));
     }
 
     private int[] splitNumber(int number) {
-        String[] stringNumbers = String.valueOf(number).split("");
-        int[] numbers = new int[stringNumbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = Integer.parseInt(stringNumbers[i]);
-        }
-        return numbers;
+        return Arrays.stream(String.valueOf(number).split(""))
+                .mapToInt(Integer::parseInt).toArray();
     }
 
 }
