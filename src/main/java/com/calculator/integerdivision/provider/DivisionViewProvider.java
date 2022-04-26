@@ -51,6 +51,13 @@ public class DivisionViewProvider implements Provider {
                     getDelimiterLine(mathResult, index, subNumLeftSpaces)
             );
 
+            // last remainder part
+            if (index == mathResult.size() - 1) {
+                viewStepBuilder.addViewLine(
+                        getLastRemainderLine(mathResult, index, subNumLeftSpaces)
+                );
+            }
+
             viewResult.addStep(viewStepBuilder.build());
         }
 
@@ -125,6 +132,28 @@ public class DivisionViewProvider implements Provider {
                 .append(stepIndex == 0 ? mathResult.getResult() : "")
                 .append(LF)
                 .toString();
+    }
+
+    private String getLastRemainderLine(DivisionMathResult mathResult,
+                                        int stepIndex,
+                                        String subNumLeftSpaces) {
+        DivisionMathStep mathStep = mathResult.getStep(stepIndex);
+        return new StringBuilder()
+                .append(getLastRemainderLeftSpaces(mathResult, stepIndex, subNumLeftSpaces))
+                .append(mathStep.getRemainder())
+                .append(PIPE_LINE)
+                .append(LF)
+                .toString();
+    }
+
+    private String getLastRemainderLeftSpaces(DivisionMathResult mathResult,
+                                              int stepIndex,
+                                              String subNumLeftSpaces) {
+        DivisionMathStep mathStep = mathResult.getStep(stepIndex);
+        int remainder = mathStep.getRemainder();
+        int subNumber = mathStep.getSubNumber();
+        int lengthDiff = calcNumberLength(subNumber) - calcNumberLength(remainder);
+        return SPACE.repeat(subNumLeftSpaces.length() + lengthDiff);
     }
 
     private String getSubNumLeftSpaces(DivisionMathResult mathResult,
