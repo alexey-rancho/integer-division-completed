@@ -148,8 +148,8 @@ public class DivisionViewProvider implements Provider {
         int remainderLength = mathStep.getRemainder() > 0
                 ? calcNumberLength(mathStep.getRemainder())
                 : 0;
-        int subNumberLength = mathStep.getRemainder() > 0
-                ? calcNumberLength(mathStep.getRemainder())
+        int subNumberLength = mathStep.getSubNumber() > 0
+                ? calcNumberLength(mathStep.getSubNumber())
                 : 0;
         int digitLength = mathStep.getDigit() > 0
                 ? calcNumberLength(mathStep.getDigit())

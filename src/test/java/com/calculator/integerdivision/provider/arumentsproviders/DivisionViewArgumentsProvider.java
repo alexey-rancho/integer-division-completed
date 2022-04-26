@@ -153,6 +153,34 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             )
     );
 
+    DivisionViewResult expected13 = new DivisionViewResult().addAllSteps(
+            buildStep(
+                    "_31231|2" + LF,
+                    " 2    |-----" + LF,
+                    " -----|15615" + LF
+            ),
+            buildStep(
+                    "_11   |" + LF,
+                    " 10   |" + LF,
+                    " -----|" + LF
+            ),
+            buildStep(
+                    " _12  |" + LF,
+                    "  12  |" + LF,
+                    "  ----|" + LF
+            ),
+            buildStep(
+                    "   _3 |" + LF,
+                    "    2 |" + LF,
+                    "    --|" + LF
+            ),
+            buildStep(
+                    "   _11|" + LF,
+                    "    10|" + LF,
+                    "    --|" + LF
+            )
+    );
+
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
                 Arguments.of(78945, 4, expected1),
@@ -166,7 +194,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
                 Arguments.of(671034, 10000, expected9),
                 Arguments.of(7702, 7, expected10),
                 Arguments.of(1000, 5, expected11),
-                Arguments.of(20000, 4, expected12)
+                Arguments.of(20000, 4, expected12),
+                Arguments.of(31231, 2, expected13)
         );
     }
 
