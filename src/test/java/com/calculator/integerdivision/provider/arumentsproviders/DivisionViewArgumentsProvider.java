@@ -36,7 +36,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "   _25|" + LF,
                     "    24|" + LF,
-                    "    --|" + LF
+                    "    --|" + LF,
+                    "     1|" + LF
             )
     );
 
@@ -44,7 +45,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "_1000|10" + LF,
                     " 1000|---" + LF,
-                    " ----|100" + LF
+                    " ----|100" + LF,
+                    "    0|" + LF
             )
     );
 
@@ -52,7 +54,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "_99999|9" + LF,
                     " 99999|-----" + LF,
-                    " -----|11111" + LF
+                    " -----|11111" + LF,
+                    "     0|" + LF
             )
     );
 
@@ -75,7 +78,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "  _162|" + LF,
                     "   132|" + LF,
-                    "   ---|" + LF
+                    "   ---|" + LF,
+                    "    30|" + LF
             )
     );
 
@@ -83,7 +87,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "_1|1" + LF,
                     " 1|-" + LF,
-                    " -|1" + LF
+                    " -|1" + LF,
+                    " 0|" + LF
             )
     );
 
@@ -91,7 +96,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "_111111|111111" + LF,
                     " 111111|-" + LF,
-                    " ------|1" + LF
+                    " ------|1" + LF,
+                    "      0|" + LF
             )
     );
 
@@ -99,7 +105,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "_1111111|111111" + LF,
                     " 1111110|--" + LF,
-                    " -------|10" + LF
+                    " -------|10" + LF,
+                    "       1|" + LF
             )
     );
 
@@ -112,7 +119,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     " _900903|" + LF,
                     "  888888|" + LF,
-                    "  ------|" + LF
+                    "  ------|" + LF,
+                    "   12015|" + LF
             )
     );
 
@@ -125,7 +133,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     " _71034|" + LF,
                     "  70000|" + LF,
-                    "  -----|" + LF
+                    "  -----|" + LF,
+                    "   1034|" + LF
             )
     );
 
@@ -133,7 +142,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "_7702|7" + LF,
                     " 7700|----" + LF,
-                    " ----|1100" + LF
+                    " ----|1100" + LF,
+                    "    2|" + LF
             )
     );
 
@@ -141,7 +151,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "_1000|5" + LF,
                     " 1000|---" + LF,
-                    " ----|200" + LF
+                    " ----|200" + LF,
+                    "    0|" + LF
             )
     );
 
@@ -149,7 +160,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "_20000|4" + LF,
                     " 20000|----" + LF,
-                    " -----|5000" + LF
+                    " -----|5000" + LF,
+                    "     0|" + LF
             )
     );
 
@@ -177,7 +189,8 @@ public class DivisionViewArgumentsProvider implements ArgumentsProvider {
             buildStep(
                     "   _11|" + LF,
                     "    10|" + LF,
-                    "    --|" + LF
+                    "    --|" + LF,
+                    "     1|" + LF
             )
     );
 
