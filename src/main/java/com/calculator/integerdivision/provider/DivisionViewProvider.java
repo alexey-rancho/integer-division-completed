@@ -41,7 +41,7 @@ public class DivisionViewProvider implements Provider {
                         getDigitLine(mathResult, index, digitLeftSpaces)
                 );
             }
-            // sub and del part
+            // subtracted number and delimiter part
             String subNumLeftSpaces = getSubNumLeftSpaces(mathResult, index, digitLeftSpaces);
 
             viewStepBuilder.addViewLine(
@@ -64,7 +64,7 @@ public class DivisionViewProvider implements Provider {
     }
 
     /**
-     * dividend|divider line
+     * @return division header line
      */
     private String getHeaderLine(DivisionMathResult mathResult) {
         return new StringBuilder()
@@ -77,7 +77,7 @@ public class DivisionViewProvider implements Provider {
     }
 
     /**
-     * digit line
+     * @return digit line after delimiter line
      */
     private String getDigitLine(DivisionMathResult mathResult,
                                 int stepIndex,
@@ -94,7 +94,7 @@ public class DivisionViewProvider implements Provider {
     }
 
     /**
-     * subNumber line
+     * @return subtracted number line after digit line or header line
      */
     private String getSubNumberLine(DivisionMathResult mathResult,
                                     int stepIndex,
@@ -112,7 +112,7 @@ public class DivisionViewProvider implements Provider {
     }
 
     /**
-     * delimiter line
+     * @return delimiter line after subtracted number line
      */
     private String getDelimiterLine(DivisionMathResult mathResult,
                                     int stepIndex,
@@ -121,7 +121,7 @@ public class DivisionViewProvider implements Provider {
                 .append(subNumLeftSpaces)
                 .append(getStepDelimiter(subNumLeftSpaces, mathResult.getDividend()))
                 .append(PIPE_LINE)
-                // if step == 0, result sets under delimiters
+                // if step == 0, result sets after step delimiter
                 .append(stepIndex == 0 ? mathResult.getResult() : "")
                 .append(LF)
                 .toString();

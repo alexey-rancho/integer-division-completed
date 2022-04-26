@@ -49,11 +49,13 @@ public class DivisionMathProvider implements Provider {
                 continue;
             }
             if (digit >= divider || digit == 0) {
-                DivisionMathStep step = divide(stepBuilder, digit, divider);
+                DivisionInfo divisionInfo = divide(digit, divider);
+                DivisionMathStep step = buildMathStep(stepBuilder, divisionInfo);
                 mathResult.addStep(step);
+
                 isStepFinished = true;
 
-                remainder = step.getRemainder();
+                remainder = divisionInfo.remainder;
                 if (remainder == 0) {
                     digit = 0;
                 }
@@ -63,16 +65,29 @@ public class DivisionMathProvider implements Provider {
         return mathResult;
     }
 
-    private DivisionMathStep divide(DivisionMathStep.Builder builder, int dividend, int divider) {
+    private DivisionInfo divide(int dividend, int divider) {
         int subNumber = dividend - (dividend % divider);
         int multiplier = subNumber / divider;
         int remainder = dividend - subNumber;
 
-        builder.setMultiplier(multiplier)
-                .setSubNumber(subNumber)
-                .setRemainder(remainder);
+        return new DivisionInfo(subNumber, multiplier, remainder);
+    }
 
-        return builder.build();
+    /**
+     * Builds DivisionMathStep object by setting missing props
+     * (multiplier, subNumber, remainder) which are retrieved
+     * from DivisionInfo object
+     *
+     * @param stepBuilder  DivisionMathStep builder with already set digit
+     * @param divisionInfo DivisionInfo instance got from divide() method
+     * @return built DivisionMathStep instance
+     */
+    private DivisionMathStep buildMathStep(DivisionMathStep.Builder stepBuilder,
+                                           DivisionInfo divisionInfo) {
+        stepBuilder.setMultiplier(divisionInfo.multiplier)
+                .setSubNumber(divisionInfo.subNumber)
+                .setRemainder(divisionInfo.remainder);
+        return stepBuilder.build();
     }
 
     private boolean isDividerPartOfDigit(int divider, int digit) {
@@ -93,13 +108,40 @@ public class DivisionMathProvider implements Provider {
                 && digits[index + 1] <= divider;
     }
 
-    private int concatNumbers(int a, int b) {
-        return Integer.parseInt("%d%d".formatted(a, b));
+    /**
+     * Puts together passed numbers like that:
+     * concatNumbers(1, 22, 3) -> 1223
+     *
+     * @return one concat integer from passed integers
+     */
+    private int concatNumbers(int... numbers) {
+        String charNumbers = Arrays.stream(numbers)
+                .mapToObj(String::valueOf)
+                .reduce("", (partial, next) -> partial + next);
+        return Integer.parseInt(charNumbers);
     }
 
     private int[] splitNumber(int number) {
         return Arrays.stream(String.valueOf(number).split(""))
                 .mapToInt(Integer::parseInt).toArray();
+    }
+
+    /**
+     * POD (Plain Old Data) class that's used for transferring division result
+     * (dividend/divider -> subNumber, multiplier, remainder) between
+     * divide and buildMathStep methods
+     */
+    private class DivisionInfo {
+        private final int subNumber;
+        private final int multiplier;
+        private final int remainder;
+
+        private DivisionInfo(int subNumber, int multiplier, int remainder) {
+            this.subNumber = subNumber;
+            this.multiplier = multiplier;
+            this.remainder = remainder;
+        }
+
     }
 
 }

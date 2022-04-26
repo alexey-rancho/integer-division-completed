@@ -21,11 +21,21 @@ public class IntegerDivisionCalculator {
         this.viewProvider = viewProvider;
     }
 
+    /**
+     * Calculates division using passed dividend and divider
+     *
+     * @return final result consists of math result and view result objects
+     * that can be accessed
+     */
     public DivisionFinalResult calc(int dividend, int divider) {
-        numberValidator.validate(dividend, divider);
+        validate(dividend, divider);
         DivisionMathResult mathResult = mathProvider.provide(dividend, divider);
         DivisionViewResult viewResult = viewProvider.provide(mathResult);
         return new DivisionFinalResult(mathResult, viewResult);
+    }
+
+    private void validate(int dividend, int divider) {
+        numberValidator.validate(dividend, divider);
     }
 
 }
