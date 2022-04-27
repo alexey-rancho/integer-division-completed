@@ -48,9 +48,9 @@ public class DivisionViewResult implements DivisionResult<DivisionViewStep> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        steps.forEach(step -> builder.append(step.getView()));
-        return builder.toString();
+        return steps.stream()
+                .map(DivisionViewStep::getView)
+                .reduce("", (partial, next) -> partial + next);
     }
 
     @Override

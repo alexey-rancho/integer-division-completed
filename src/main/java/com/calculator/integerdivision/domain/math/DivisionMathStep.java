@@ -103,17 +103,12 @@ public final class DivisionMathStep {
 
     @Override
     public String toString() {
-        return new StringBuilder("DivisionStep{")
-                .append("multiplier=")
-                .append(multiplier)
-                .append(", digit=")
-                .append(digit)
-                .append(", subNumber=")
-                .append(subNumber)
-                .append(", remainder=")
-                .append(remainder)
-                .append('}')
-                .toString();
+        return "DivisionStep{" +
+                "multiplier=" + multiplier +
+                ", digit=" + digit +
+                ", subNumber=" + subNumber +
+                ", remainder=" + remainder +
+                '}';
     }
 
 }

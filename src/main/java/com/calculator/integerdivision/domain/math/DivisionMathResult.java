@@ -84,20 +84,12 @@ public class DivisionMathResult implements DivisionResult<DivisionMathStep> {
 
     @Override
     public String toString() {
-        return new StringBuilder("DivisionMathResult{")
-                .append("dividend=")
-                .append(dividend)
-                .append(", ")
-                .append("divider=")
-                .append(divider)
-                .append(", ")
-                .append("result=")
-                .append(getResult())
-                .append(", ")
-                .append("steps=")
-                .append(steps)
-                .append("}")
-                .toString();
+        return "DivisionMathResult{" +
+                "dividend=" + dividend +
+                ", divider=" + divider +
+                ", result=" + getResult() +
+                ", steps=" + steps +
+                "}";
     }
 
     @Override
