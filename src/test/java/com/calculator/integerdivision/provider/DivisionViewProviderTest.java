@@ -12,7 +12,7 @@ public class DivisionViewProviderTest {
 
     @ParameterizedTest
     @ArgumentsSource(DivisionViewArgumentsProvider.class)
-    void testProvideWhenDividendBiggerThanDividerAndMathResultIsNotEmpty(int dividend, int divider, DivisionViewResult expected) {
+    void testProvideWhenMathResultIsNotEmpty(int dividend, int divider, DivisionViewResult expected) {
         DivisionMathResult mathResult = new DivisionMathProvider().provide(dividend, divider);
         DivisionViewResult actual = new DivisionViewProvider().provide(mathResult);
         Assertions.assertEquals(expected, actual);

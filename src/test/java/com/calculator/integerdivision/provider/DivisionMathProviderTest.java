@@ -10,7 +10,7 @@ public class DivisionMathProviderTest {
 
     @ParameterizedTest
     @ArgumentsSource(DivisionMathArgumentsProvider.class)
-    void testProvideWhenDividendBiggerThanDivider(DivisionMathResult expected) {
+    void testProvide(DivisionMathResult expected) {
         DivisionMathResult actual = new DivisionMathProvider()
                 .provide(expected.getDividend(), expected.getDivider());
         Assertions.assertEquals(expected, actual);

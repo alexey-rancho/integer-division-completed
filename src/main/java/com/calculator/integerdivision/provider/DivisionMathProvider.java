@@ -47,6 +47,7 @@ public class DivisionMathProvider implements Provider {
             boolean condition1 = isDigitDividedWithNoRemainder(digit, divider) || isDividerPartOfDigit(divider, digit);
             boolean condition2 = isNextDigitNull(index, digits) || isNextDigitEqualOrLess(index, digits, divider);
             if (condition1 && condition2) {
+                remainder = 0;
                 continue;
             }
             if (digit >= divider || digit == 0) {
@@ -145,6 +146,15 @@ public class DivisionMathProvider implements Provider {
             this.subNumber = subNumber;
             this.multiplier = multiplier;
             this.remainder = remainder;
+        }
+
+        @Override
+        public String toString() {
+            return "DivisionInfo{" +
+                    "subNumber=" + subNumber +
+                    ", multiplier=" + multiplier +
+                    ", remainder=" + remainder +
+                    '}';
         }
 
     }

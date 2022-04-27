@@ -78,6 +78,21 @@ public class DivisionMathArgumentsProvider implements ArgumentsProvider {
                     buildStep(20000, 5000, 20000, 0)
             );
 
+    DivisionMathResult expected13 = new DivisionMathResult(31231, 2)
+            .addAllSteps(
+                    buildStep(3, 1, 2, 1),
+                    buildStep(11, 5, 10, 1),
+                    buildStep(12, 6, 12, 0),
+                    buildStep(3, 1, 2, 1),
+                    buildStep(11, 5, 10, 1)
+            );
+
+    DivisionMathResult expected14 = new DivisionMathResult(20160, 2)
+            .addAllSteps(
+                    buildStep(201, 100, 200, 1),
+                    buildStep(160, 80, 160, 0)
+            );
+
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
@@ -92,7 +107,9 @@ public class DivisionMathArgumentsProvider implements ArgumentsProvider {
                 Arguments.of(expected9),
                 Arguments.of(expected10),
                 Arguments.of(expected11),
-                Arguments.of(expected12)
+                Arguments.of(expected12),
+                Arguments.of(expected13),
+                Arguments.of(expected14)
         );
     }
 
