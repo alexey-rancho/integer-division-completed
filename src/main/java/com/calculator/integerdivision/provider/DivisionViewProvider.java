@@ -64,7 +64,7 @@ public class DivisionViewProvider implements Provider {
         return viewResult;
     }
 
-    private void checkMathResult(DivisionMathResult mathResult) {
+    private void checkMathResult(DivisionMathResult mathResult) throws NullPointerException {
         if (mathResult == null) {
             throw new NullPointerException("mathResult argument must not be null");
         }

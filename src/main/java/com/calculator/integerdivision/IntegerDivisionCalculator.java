@@ -27,14 +27,14 @@ public class IntegerDivisionCalculator {
      * @return final result consists of math result and view result objects
      * that can be accessed
      */
-    public DivisionFinalResult calc(int dividend, int divider) {
+    public DivisionFinalResult calc(int dividend, int divider) throws IllegalArgumentException {
         validate(dividend, divider);
         DivisionMathResult mathResult = mathProvider.provide(dividend, divider);
         DivisionViewResult viewResult = viewProvider.provide(mathResult);
         return new DivisionFinalResult(mathResult, viewResult);
     }
 
-    private void validate(int dividend, int divider) {
+    private void validate(int dividend, int divider) throws IllegalArgumentException {
         numberValidator.validate(dividend, divider);
     }
 
