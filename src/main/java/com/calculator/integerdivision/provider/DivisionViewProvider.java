@@ -74,13 +74,11 @@ public class DivisionViewProvider implements Provider {
      * @return division header line
      */
     private String getHeaderLine(DivisionMathResult mathResult) {
-        return new StringBuilder()
-                .append(DOWN_LINE)
-                .append(mathResult.getDividend())
-                .append(PIPE_LINE)
-                .append(mathResult.getDivider())
-                .append(LF)
-                .toString();
+        return DOWN_LINE +
+                mathResult.getDividend() +
+                PIPE_LINE +
+                mathResult.getDivider() +
+                LF;
     }
 
     /**
@@ -90,14 +88,12 @@ public class DivisionViewProvider implements Provider {
                                 int stepIndex,
                                 String digitLeftSpaces) {
         DivisionMathStep mathStep = mathResult.getStep(stepIndex);
-        return new StringBuilder()
-                .append(digitLeftSpaces)
-                .append(DOWN_LINE)
-                .append(mathStep.getDigit())
-                .append(getDigitRightSpaces(digitLeftSpaces, mathResult.getDividend(), mathStep.getDigit()))
-                .append(PIPE_LINE)
-                .append(LF)
-                .toString();
+        return digitLeftSpaces +
+                DOWN_LINE +
+                mathStep.getDigit() +
+                getDigitRightSpaces(digitLeftSpaces, mathResult.getDividend(), mathStep.getDigit()) +
+                PIPE_LINE +
+                LF;
     }
 
     /**
@@ -107,15 +103,13 @@ public class DivisionViewProvider implements Provider {
                                     int stepIndex,
                                     String subNumLeftSpaces) {
         DivisionMathStep mathStep = mathResult.getStep(stepIndex);
-        return new StringBuilder()
-                .append(subNumLeftSpaces)
-                .append(mathStep.getSubNumber())
-                .append(getSubNumRightSpaces(subNumLeftSpaces, mathResult.getDividend(), mathStep.getSubNumber()))
-                .append(PIPE_LINE)
+        return subNumLeftSpaces +
+                mathStep.getSubNumber() +
+                getSubNumRightSpaces(subNumLeftSpaces, mathResult.getDividend(), mathStep.getSubNumber()) +
+                PIPE_LINE +
                 // if step == 0, delimiter between divider and result sets
-                .append(stepIndex == 0 ? getResultDelimiter(mathResult.getResult()) : "")
-                .append(LF)
-                .toString();
+                (stepIndex == 0 ? getResultDelimiter(mathResult.getResult()) : "") +
+                LF;
     }
 
     /**
@@ -124,26 +118,22 @@ public class DivisionViewProvider implements Provider {
     private String getDelimiterLine(DivisionMathResult mathResult,
                                     int stepIndex,
                                     String subNumLeftSpaces) {
-        return new StringBuilder()
-                .append(subNumLeftSpaces)
-                .append(getStepDelimiter(subNumLeftSpaces, mathResult.getDividend()))
-                .append(PIPE_LINE)
+        return subNumLeftSpaces +
+                getStepDelimiter(subNumLeftSpaces, mathResult.getDividend()) +
+                PIPE_LINE +
                 // if step == 0, result sets after step delimiter
-                .append(stepIndex == 0 ? mathResult.getResult() : "")
-                .append(LF)
-                .toString();
+                (stepIndex == 0 ? mathResult.getResult() : "") +
+                LF;
     }
 
     private String getLastRemainderLine(DivisionMathResult mathResult,
                                         int stepIndex,
                                         String subNumLeftSpaces) {
         DivisionMathStep mathStep = mathResult.getStep(stepIndex);
-        return new StringBuilder()
-                .append(getLastRemainderLeftSpaces(mathResult, stepIndex, subNumLeftSpaces))
-                .append(mathStep.getRemainder())
-                .append(PIPE_LINE)
-                .append(LF)
-                .toString();
+        return getLastRemainderLeftSpaces(mathResult, stepIndex, subNumLeftSpaces) +
+                mathStep.getRemainder() +
+                PIPE_LINE +
+                LF;
     }
 
     private String getLastRemainderLeftSpaces(DivisionMathResult mathResult,
