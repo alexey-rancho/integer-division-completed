@@ -2,10 +2,12 @@ package com.calculator.integerdivision;
 
 import com.calculator.integerdivision.domain.DivisionFinalResult;
 import com.calculator.integerdivision.domain.view.DivisionViewResult;
+import com.calculator.integerdivision.logger.DivisionLogger;
 import com.calculator.integerdivision.provider.DivisionMathProvider;
 import com.calculator.integerdivision.provider.DivisionViewProvider;
 import com.calculator.integerdivision.validator.DivisionNumberValidator;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,49 +15,57 @@ public class IntegerDivisionConsoleApp {
 
     private final Scanner consoleScanner;
     private final IntegerDivisionCalculator calculator;
-    private final DivisionLogger logger;
+    private DivisionLogger logger;
 
-    IntegerDivisionConsoleApp() {
+    private final boolean doLog;
+
+    /**
+     * Interactive console application for visual division calculation
+     *
+     * @param doLog if true, all the info about program working
+     *              is being recorded to the log file
+     * */
+    IntegerDivisionConsoleApp(boolean doLog) {
         calculator = new IntegerDivisionCalculator(
                 new DivisionMathProvider(),
                 new DivisionViewProvider(),
                 new DivisionNumberValidator()
         );
         consoleScanner = new Scanner(System.in);
-        logger = new DivisionLogger();
-    }
 
-    public void run() {
-        run(false);
+        try {
+            logger = new DivisionLogger(doLog);
+        } catch (IOException | SecurityException | IllegalArgumentException e) {
+            consoleScanner.close();
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+        this.doLog = doLog;
     }
 
     /**
      * Runs integer division calculator in CLI
-     *
-     * @param doLog if true, all the info about program working
-     *              is being recorded to the log file. By default,
-     *              it set to false
      */
-    public void run(boolean doLog) {
+    public void run() {
         int dividend = requestDividend();
         int divider = requestDivider();
         try {
             DivisionFinalResult finalResult = calc(dividend, divider);
             if (doLog) {
                 log(finalResult);
-
             }
             printView(finalResult.getView());
         } catch (IllegalArgumentException e) {
             println(e.getMessage() + "\n");
         } finally {
-            run(doLog);
+            run();
         }
     }
 
     public void log(DivisionFinalResult finalResult) {
-        String msg = finalResult.getMath().toString() + "\n" + finalResult.getView().toString();
-        logger.log(msg);
+        String message = finalResult.getMath() + "\n" + finalResult.getView();
+        logger.log(message);
     }
 
     private int requestDividend() {
@@ -96,6 +106,9 @@ public class IntegerDivisionConsoleApp {
         return calculator.calc(dividend, divider);
     }
 
+    /**
+     * Prints got view result to CLI
+     * */
     private void printView(DivisionViewResult viewResult) {
         println(viewResult);
     }
